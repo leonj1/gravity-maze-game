@@ -1,5 +1,6 @@
 export function buildLevelLayout(levelNumber, W, H, PLAYER_SIZE, PLATFORM_HEIGHT) {
-  const PLATFORM_WIDTH = Math.max(8, Math.round(W * 0.05));
+  // Increase platform length (width) by 5x while keeping height unchanged
+  const PLATFORM_WIDTH = Math.max(8, Math.round(W * 0.05)) * 5;
   const margin = Math.max(16, Math.round(PLAYER_SIZE * 0.2));
 
   let blacks = 3, reds = 0, total = 3;
@@ -60,4 +61,3 @@ export function buildLevelLayout(levelNumber, W, H, PLAYER_SIZE, PLATFORM_HEIGHT
 }
 
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-
