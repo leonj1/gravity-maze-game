@@ -40,11 +40,22 @@ function handleResize() {
   game.handleResize(w, h);
 }
 
-window.addEventListener('resize', handleResize);
+let resizeQueued = false;
+function throttledResize() {
+  if (!resizeQueued) {
+    resizeQueued = true;
+    requestAnimationFrame(() => {
+      handleResize();
+      resizeQueued = false;
+    });
+  }
+}
+
+window.addEventListener('resize', throttledResize);
 // iOS Safari adjusts the visual viewport on scroll and address-bar collapse
 if (window.visualViewport) {
-  window.visualViewport.addEventListener('resize', handleResize);
-  window.visualViewport.addEventListener('scroll', handleResize);
+  window.visualViewport.addEventListener('resize', throttledResize);
+  window.visualViewport.addEventListener('scroll', throttledResize);
 }
 
 // Keyboard controls
