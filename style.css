@@ -46,9 +46,9 @@ html, body {
   position: fixed;
   right: 8px;
   bottom: 8px;
-  display: flex;
+  display: none; /* hidden by default; shown on touch devices */
   gap: 8px;
-  z-index: 5;
+  z-index: 10; /* ensure above canvas */
 }
 
 #buttons button {
@@ -92,4 +92,5 @@ html, body {
 /* Show touch controls on mobile-like pointers */
 @media (hover: none) and (pointer: coarse) {
   #touch-controls { display: flex; }
+  #buttons { display: flex; }
 }
