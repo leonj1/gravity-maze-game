@@ -1,0 +1,34 @@
+[build]
+# Static site: publish the repository root (contains index.html)
+publish = "."
+
+[[headers]]
+# Revalidate JS on each request (no fingerprinting in filenames)
+for = "/src/*.js"
+  [headers.values]
+  cache-control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+# Revalidate CSS on each request (no fingerprinting in filenames)
+for = "/style.css"
+  [headers.values]
+  cache-control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+# Don’t cache HTML; always revalidate
+for = "/*.html"
+  [headers.values]
+  cache-control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+# Basic security hardening
+for = "/*"
+  [headers.values]
+  X-Content-Type-Options = "nosniff"
+  Referrer-Policy = "no-referrer"
+
+# Uncomment if you later add client-side routing and want SPA-style fallback
+# [[redirects]]
+# from = "/*"
+# to = "/index.html"
+# status = 200

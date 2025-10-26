@@ -30,3 +30,19 @@ Dev
 
 Known design caveat
 - With player = 150 px and platform width = 5% of viewport width, on small screens platforms may be narrower than the player. This is per spec; we can increase width (e.g., 15–25%) or scale player by viewport if you prefer.
+
+## Deploy (Netlify)
+
+This repo includes a `netlify.toml` configured for a static site:
+
+- Publish directory: `.` (repo root)
+- No build command
+- Revalidate for `/src/*.js` and `style.css` (no fingerprinting)
+- No-cache for HTML
+
+Deploy options:
+
+- Netlify UI: New site from Git → select this repo → set Publish directory to `.` and leave Build command empty.
+- Netlify CLI: `npm i -g netlify-cli` then:
+  - `netlify deploy --dir=.` (preview)
+  - `netlify deploy --prod --dir=.` (production)
