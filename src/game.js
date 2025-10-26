@@ -243,8 +243,8 @@ export class Game {
     ctx.save();
     ctx.clearRect(0, 0, W, H);
 
-    // Background grid subtle
-    ctx.fillStyle = '#111';
+    // Background
+    ctx.fillStyle = '#f2f2f2';
     ctx.fillRect(0, 0, W, H);
 
     // If rotating, draw with easing-based interim rotation
