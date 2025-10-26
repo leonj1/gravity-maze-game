@@ -11,6 +11,7 @@ html, body {
   display: block;
   width: 100vw;
   height: 100vh;
+  touch-action: none;
 }
 
 #hud {
@@ -43,4 +44,34 @@ html, body {
 
 #buttons button:active {
   transform: translateY(1px);
+}
+
+/* Mobile touch controls (hidden by default; shown on coarse pointers) */
+#touch-controls {
+  position: fixed;
+  left: 8px;
+  bottom: 8px;
+  display: none;
+  gap: 8px;
+  z-index: 10;
+}
+
+#touch-controls button {
+  font-size: 20px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(0,0,0,0.3);
+  color: #fff;
+  min-width: 52px;
+  min-height: 52px;
+}
+
+#touch-controls button:active {
+  transform: translateY(1px);
+}
+
+/* Show touch controls on mobile-like pointers */
+@media (hover: none) and (pointer: coarse) {
+  #touch-controls { display: flex; }
 }

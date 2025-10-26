@@ -4,6 +4,9 @@ const canvas = document.getElementById('game');
 const hud = document.getElementById('hud');
 const btnCW = document.getElementById('btn-cw');
 const btnCCW = document.getElementById('btn-ccw');
+const btnLeft = document.getElementById('btn-left');
+const btnRight = document.getElementById('btn-right');
+const btnJump = document.getElementById('btn-jump');
 
 function fitCanvas() {
   const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
@@ -43,6 +46,24 @@ window.addEventListener('keyup', (e) => {
 btnCW.addEventListener('click', () => game.requestRotate(+1));
 btnCCW.addEventListener('click', () => game.requestRotate(-1));
 
+// Touch controls (mobile)
+const touch = { left: false, right: false };
+function bindHold(btn, setFlag) {
+  if (!btn) return;
+  const down = (e) => { e.preventDefault(); setFlag(true); btn.setPointerCapture?.(e.pointerId); };
+  const up = (e) => { e.preventDefault(); setFlag(false); };
+  btn.addEventListener('pointerdown', down, { passive: false });
+  btn.addEventListener('pointerup', up, { passive: false });
+  btn.addEventListener('pointercancel', up);
+  btn.addEventListener('pointerleave', up);
+  btn.addEventListener('pointerout', up);
+}
+bindHold(btnLeft, (v) => (touch.left = v));
+bindHold(btnRight, (v) => (touch.right = v));
+if (btnJump) {
+  btnJump.addEventListener('pointerdown', (e) => { e.preventDefault(); game.requestJump(); }, { passive: false });
+}
+
 // Mobile orientation: rotate world when device orientation changes by ~90°.
 let lastScreenAngle = (screen.orientation && screen.orientation.angle) || 0;
 window.addEventListener('orientationchange', () => {
@@ -59,12 +80,11 @@ function loop(now) {
   const dt = Math.min(0.033, (now - last) / 1000);
   last = now;
   const input = {
-    left: keys.has('ArrowLeft'),
-    right: keys.has('ArrowRight'),
+    left: keys.has('ArrowLeft') || touch.left,
+    right: keys.has('ArrowRight') || touch.right,
   };
   game.update(dt, input);
   game.render();
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
-
