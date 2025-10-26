@@ -8,12 +8,22 @@ const btnLeft = document.getElementById('btn-left');
 const btnRight = document.getElementById('btn-right');
 const btnJump = document.getElementById('btn-jump');
 
+function getViewportSize() {
+  // Prefer VisualViewport on mobile to handle iOS dynamic toolbar sizes
+  const vv = window.visualViewport;
+  if (vv && typeof vv.width === 'number' && typeof vv.height === 'number') {
+    return { w: Math.floor(vv.width), h: Math.floor(vv.height) };
+  }
+  return { w: Math.floor(window.innerWidth), h: Math.floor(window.innerHeight) };
+}
+
 function fitCanvas() {
   const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-  const w = Math.floor(window.innerWidth);
-  const h = Math.floor(window.innerHeight);
+  const { w, h } = getViewportSize();
+  // Match the drawing buffer to CSS pixels * DPR
   canvas.width = Math.floor(w * dpr);
   canvas.height = Math.floor(h * dpr);
+  // Keep CSS size in CSS pixels; canvas itself is fixed/inset:0 via CSS
   canvas.style.width = w + 'px';
   canvas.style.height = h + 'px';
   const ctx = canvas.getContext('2d');
@@ -24,11 +34,18 @@ function fitCanvas() {
 let { w, h } = fitCanvas();
 const game = new Game(canvas, hud);
 
-window.addEventListener('resize', () => {
+function handleResize() {
   const dims = fitCanvas();
   w = dims.w; h = dims.h;
   game.handleResize(w, h);
-});
+}
+
+window.addEventListener('resize', handleResize);
+// iOS Safari adjusts the visual viewport on scroll and address-bar collapse
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', handleResize);
+  window.visualViewport.addEventListener('scroll', handleResize);
+}
 
 // Keyboard controls
 const keys = new Set();
@@ -73,6 +90,8 @@ window.addEventListener('orientationchange', () => {
     game.requestRotate(delta > 0 ? +1 : -1);
   }
   lastScreenAngle = ang;
+  // Trigger a re-fit after the rotation settles
+  setTimeout(handleResize, 0);
 });
 
 let last = performance.now();

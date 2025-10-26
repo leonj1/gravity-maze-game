@@ -2,16 +2,32 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #f2f2f2;
+  /* Prevent rubber-band scrolling and extra page height on mobile */
+  overflow: hidden;
+  overscroll-behavior: none;
+  /* Match canvas background to avoid visible borders */
+  background: #f5f5f5;
   color: #eaeaea;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 #game {
   display: block;
-  width: 100vw;
-  height: 100vh;
+  /* Pin to viewport edges to truly cover iOS dynamic bars */
+  position: fixed;
+  inset: 0; /* top/right/bottom/left = 0 */
+  width: 100%;
+  height: 100%;
   touch-action: none;
+  z-index: 0; /* ensure overlays can sit above */
+}
+
+/* Prefer dynamic viewport units when supported (iOS 16+, modern Android/Chrome) */
+@supports (height: 100dvh) {
+  #game {
+    width: 100dvw;
+    height: 100dvh;
+  }
 }
 
 #hud {
@@ -23,6 +39,7 @@ html, body {
   border-radius: 6px;
   font-size: 14px;
   pointer-events: none;
+  z-index: 5;
 }
 
 #buttons {
@@ -31,6 +48,7 @@ html, body {
   bottom: 8px;
   display: flex;
   gap: 8px;
+  z-index: 5;
 }
 
 #buttons button {
