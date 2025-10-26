@@ -1,7 +1,8 @@
 import { buildLevelLayout } from './levels.js';
 
-const PLAYER_SIZE = 150;
-const GOAL_SIZE = 150;
+// Reduce player and goal squares to 25% of previous size (150 -> 37.5)
+const PLAYER_SIZE = 37.5;
+const GOAL_SIZE = 37.5;
 const PLATFORM_HEIGHT = PLAYER_SIZE * 0.5; // 75
 const ROTATE_DURATION = 0.7; // seconds
 const RED_FADE_SECONDS = 5.0;
@@ -305,4 +306,3 @@ export class Game {
 function rectsOverlap(a, b) {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 }
-
