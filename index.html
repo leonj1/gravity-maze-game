@@ -9,6 +9,12 @@
   <body>
     <canvas id="game"></canvas>
     <div id="hud" role="status" aria-live="polite"></div>
+    <!-- Mobile movement controls (shown only on touch devices via CSS) -->
+    <div id="touch-controls" aria-hidden="true">
+      <button id="btn-left" aria-label="Move Left">◀</button>
+      <button id="btn-right" aria-label="Move Right">▶</button>
+      <button id="btn-jump" aria-label="Jump">⤒</button>
+    </div>
     <div id="buttons">
       <button id="btn-ccw" aria-label="Rotate Counter-Clockwise">⟲</button>
       <button id="btn-cw" aria-label="Rotate Clockwise">⟳</button>
@@ -16,4 +22,3 @@
     <script type="module" src="src/main.js"></script>
   </body>
   </html>
-

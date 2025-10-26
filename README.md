@@ -18,7 +18,10 @@ Controls (desktop):
 - Q / E: rotate world 90° CCW / CW (animated 700 ms)
 
 Controls (mobile):
-- Rotate the device 90° to rotate the world to match the device orientation (when supported). You can also tap on-screen rotate buttons.
+- Rotate the device 90° to rotate the world to match the device orientation (when supported).
+- On-screen buttons appear on touch devices:
+  - Bottom-left: Left, Right, Jump
+  - Bottom-right: Rotate CCW/CW
 
 Notes
 - Physics are paused during the rotation animation to keep axis-aligned collision. Red-platform fading also pauses during rotation.
