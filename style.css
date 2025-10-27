@@ -94,3 +94,15 @@ html, body {
   #touch-controls { display: flex; }
   #buttons { display: flex; }
 }
+
+/* Also show when any input is coarse (covers iPad Desktop mode, hybrids) */
+@media (any-pointer: coarse) {
+  #touch-controls { display: flex; }
+  #buttons { display: flex; }
+}
+
+/* JS fallback: if we detect touch points, force show */
+html.has-touch #touch-controls,
+html.has-touch #buttons {
+  display: flex;
+}

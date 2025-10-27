@@ -1,5 +1,22 @@
 import { Game } from './game.js';
 
+// Ensure on-screen controls appear on iPad and other touch-capable devices
+try {
+  const hasTouch = (navigator.maxTouchPoints && navigator.maxTouchPoints > 0)
+    || (typeof window !== 'undefined' && 'ontouchstart' in window)
+    || (window.matchMedia && window.matchMedia('(any-pointer: coarse)').matches);
+  if (hasTouch) {
+    document.documentElement.classList.add('has-touch');
+  } else {
+    // Lazy-detect first touch to handle odd UA/mode cases
+    window.addEventListener('touchstart', () => {
+      document.documentElement.classList.add('has-touch');
+    }, { once: true, passive: true });
+  }
+} catch (_) {
+  // No-op if environment lacks the above APIs
+}
+
 const canvas = document.getElementById('game');
 const hud = document.getElementById('hud');
 const btnCW = document.getElementById('btn-cw');
