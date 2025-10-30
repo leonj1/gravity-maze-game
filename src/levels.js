@@ -1,4 +1,4 @@
-export function buildLevelLayout(levelNumber, W, H, PLAYER_SIZE, PLATFORM_HEIGHT) {
+export function buildLevelLayout(levelNumber, W, H, PLAYER_SIZE, PLATFORM_HEIGHT, GOAL_SIZE) {
   // Increase platform length (width) by 5x while keeping height unchanged
   const PLATFORM_WIDTH = Math.max(8, Math.round(W * 0.05)) * 5;
   const margin = Math.max(16, Math.round(PLAYER_SIZE * 0.2));
@@ -52,7 +52,7 @@ export function buildLevelLayout(levelNumber, W, H, PLAYER_SIZE, PLATFORM_HEIGHT
   };
 
   // Goal somewhere in the right-right quadrant but not hugging edges
-  const goalSize = PLAYER_SIZE; // same size
+  const goalSize = GOAL_SIZE || PLAYER_SIZE; // use GOAL_SIZE if provided, fallback to PLAYER_SIZE
   const gx = clamp(Math.round(W * 0.78), margin, W - margin - goalSize);
   const gy = clamp(Math.round(H * (levelNumber % 2 ? 0.38 : 0.48)), margin, H - margin - goalSize);
   const goal = { x: gx, y: gy, w: goalSize, h: goalSize };

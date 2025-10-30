@@ -2,7 +2,7 @@ import { buildLevelLayout } from './levels.js';
 
 // Reduce player and goal squares by an additional 50% (37.5 -> 18.75)
 const PLAYER_SIZE = 18.75;
-const GOAL_SIZE = 18.75;
+const GOAL_SIZE = 93.75; // Increased by 5x from 18.75
 const PLATFORM_HEIGHT = PLAYER_SIZE * 0.5; // 75
 const ROTATE_DURATION = 0.7; // seconds
 const RED_FADE_SECONDS = 5.0;
@@ -45,7 +45,7 @@ export class Game {
     this.time = 0;
     this.edgeTouchAccum = 0;
     this.jumpUsed = false;
-    const layout = buildLevelLayout(idx + 1, this.W, this.H, PLAYER_SIZE, PLATFORM_HEIGHT);
+    const layout = buildLevelLayout(idx + 1, this.W, this.H, PLAYER_SIZE, PLATFORM_HEIGHT, GOAL_SIZE);
     this.baseLayout = layout; // percentage-derived -> absolute built already
     this.resetAttempt();
   }
